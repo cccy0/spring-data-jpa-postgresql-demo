@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SysUserRepository extends JpaRepository<SysUser, Long> {
     /**
+     * 查询用户列表
      * @param isDeleted isDeleted
      * @param pageable page信息
      * @return Page<SysUser>

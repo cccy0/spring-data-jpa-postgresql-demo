@@ -24,12 +24,31 @@ public class SysUserService {
         this.sysUserRepository = sysUserRepository;
     }
 
+    public SysUser get(Long id) {
+        SysUser user = new SysUser();
+        user.setId(id);
+        user.setIsDeleted(0);
+        return sysUserRepository.findOne(Example.of(user)).orElse(null);
+    }
+
     public Page<SysUser> list(Pageable pageable) {
         return sysUserRepository.findAllByIsDeleted(0, pageable);
     }
 
     public SysUser create(SysUser user) {
         return sysUserRepository.save(user);
+    }
+
+    public SysUser update(SysUser user, SysUser resources) {
+        user.setUsername(resources.getUsername());
+        user.setPassword(resources.getPassword());
+        user.setOtherInfo(resources.getOtherInfo());
+        return sysUserRepository.save(user);
+    }
+
+    public void delete(SysUser user) {
+        user.setIsDeleted(1);
+        sysUserRepository.save(user);
     }
 
     @PostConstruct
